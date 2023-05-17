@@ -16,17 +16,40 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script>
-            function autoRefresh() {
-                $('#content').load('/'); // Replace '/reload' with the appropriate URL for reloading content
-            }
+            // function autoRefresh() {
+            //     var currentUrl = window.location.href;
+            //     $('#content').load(currentUrl + ' #refresh-content > *', function() {
+            //         // Callback function after content is reloaded
+            //     });
+            // }
 
-            $(document).ready(function() {
-                setInterval(autoRefresh, 1000); // Refresh every 2 seconds (adjust the interval as needed)
-            });
+            // $(document).ready(function() {
+            //     setInterval(autoRefresh, 1000); // Refresh every 1 second (adjust the interval as needed)
+            // });
         </script>
 
+        <style>
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: #00be5c;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 4px;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                z-index: 999;
+            }
+
+            .show-toast {
+                opacity: 1;
+            }
+            
+        </style>
+
     </head>
-    <body class="font-sans antialiased" id="content">
+    <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
@@ -41,7 +64,9 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div id="refresh-content">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
 
