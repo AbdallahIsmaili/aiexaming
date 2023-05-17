@@ -13,8 +13,20 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script>
+            function autoRefresh() {
+                $('#content').load('/'); // Replace '/reload' with the appropriate URL for reloading content
+            }
+
+            $(document).ready(function() {
+                setInterval(autoRefresh, 1000); // Refresh every 2 seconds (adjust the interval as needed)
+            });
+        </script>
+
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" id="content">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
@@ -32,5 +44,6 @@
                 {{ $slot }}
             </main>
         </div>
+
     </body>
 </html>
