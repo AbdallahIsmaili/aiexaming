@@ -14,19 +14,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script>
-            // function autoRefresh() {
-            //     var currentUrl = window.location.href;
-            //     $('#content').load(currentUrl + ' #refresh-content > *', function() {
-            //         // Callback function after content is reloaded
-            //     });
-            // }
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            // $(document).ready(function() {
-            //     setInterval(autoRefresh, 1000); // Refresh every 1 second (adjust the interval as needed)
-            // });
-        </script>
+
 
         <style>
             .toast {
@@ -42,11 +32,27 @@
                 z-index: 999;
             }
 
+            .delete-toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: red;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 4px;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                z-index: 999;
+            }
+
             .show-toast {
                 opacity: 1;
             }
-            
+
         </style>
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
 
     </head>
     <body class="font-sans antialiased">

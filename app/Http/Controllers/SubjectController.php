@@ -12,7 +12,8 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return view('admin.subjects.index-subjects');
+        $subjects = Subject::all();
+        return view('admin.subjects.index-subjects', compact('subjects'));
     }
 
     /**
@@ -40,7 +41,9 @@ class SubjectController extends Controller
         ]);
 
         // Redirect to a success page or perform any other actions
-        return redirect()->route('subject.index')->with('success', 'Cool the new subject ' . $subject->title . ' created successfully!');
+        // return redirect()->route('subject.index')->with('success', 'Cool the new subject ' . $subject->title . ' created successfully!');
+
+        return response()->json(['message' => 'Subject saved successfully']);
     }
 
     /**
@@ -70,8 +73,13 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subject $subject)
+    public function destroy($id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+        $subject->delete();
+
+        return response()->json(['message' => 'Subject deleted successfully.']);
     }
+
+
 }
