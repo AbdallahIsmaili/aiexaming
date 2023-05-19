@@ -45,6 +45,19 @@
                 z-index: 999;
             }
 
+            .update-toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: rgb(98, 0, 255);
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 4px;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                z-index: 999;
+            }
+
             .show-toast {
                 opacity: 1;
             }

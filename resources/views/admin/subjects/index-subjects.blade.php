@@ -67,9 +67,9 @@
                         <td class="border px-4 py-2">{{ $subject->description }}</td>
                         <td class="border px-4 py-2 text-center">
 
-                            <x-update-button class="ml-3">
-                                {{ __('U') }}
-                            </x-update-button>
+                            <a href="{{ route('subject.edit', $subject->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                U
+                            </a>
 
                             <form id="deleteForm{{ $subject->id }}" class="delete-form inline" action="{{ route('subject.destroy', $subject->id) }}" method="POST">
                                 @csrf
@@ -78,8 +78,8 @@
                                     {{ __('D') }}
                                 </button>
                             </form>
-                            
-                            
+
+
 
                         </td>
                     </tr>
@@ -107,7 +107,7 @@
 <script>
 
     $(document).ready(function() {
-        
+
         $('#submitForm').submit(function(e) {
             e.preventDefault(); // Prevent form submission
 
