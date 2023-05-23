@@ -1,6 +1,5 @@
 <x-app-layout>
 
-
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Exams Management') }}
@@ -12,27 +11,83 @@
           <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
             <div class="col-span-3 bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
-                    <div id="toast" class="toast"></div>
+
                     <div id="delete-toast" class="delete-toast"></div>
 
 
                         <!-- Main content -->
-                    <form id="submitForm" class="max-w-7xl mx-auto p-6" method="POST" action="{{ route('subject.store') }}">
+                    <form id="submitForm" class="max-w-7xl mx-auto p-6" method="POST" action="{{ route('exam.store') }}">
 
                             @csrf
 
-                            <!-- Name -->
-                        <div>
-                                <x-input-label for="subject_name" :value="__('Title')" />
-                                <x-text-input id="subject_name" class="block mt-1 w-full" type="text" name="subject_name" :value="old('subject_name')" required autofocus autocomplete="subject_name" />
-                                <x-input-error :messages="$errors->get('subject_name')" class="mt-2" />
+                            <!-- Title -->
+                        <div class="mt-4">
+                            <x-input-label for="exam_title" :value="__('Title')" />
+                            <x-text-input id="exam_title" class="block mt-1 w-full" type="text" name="exam_title" :value="old('exam_title')" required autofocus autocomplete="exam_title" />
+                            <x-input-error :messages="$errors->get('exam_title')" class="mt-2" />
                         </div>
 
-                            <!-- Subject Description -->
+                        <!-- Subject  -->
                         <div class="mt-4">
-                                <x-input-label for="subject_desc" :value="__('Subject Description')" />
-                                <x-textarea-input id="subject_desc" class="block mt-1 w-full" name="subject_desc" :value="old('subject_desc')" required autocomplete="subject_desc"></x-textarea-input>
-                                <x-input-error :messages="$errors->get('subject_desc')" class="mt-2" />
+                            <x-input-label for="subject_name" :value="__('Subject')" />
+
+                            <select id="subject_name" name="subject_name" required>
+                                <option selected>Choose a subject</option>
+                                @forelse ($subjects as $subject)
+
+                                    <option value="{{ $subject->id }}">{{ $subject->title }}</option>
+
+                                @empty
+
+                                    No subject to choose.
+
+                                @endforelse
+                            </select>
+
+                            <x-input-error :messages="$errors->get('subject_name')" class="mt-2" />
+                        </div>
+
+                            <!-- Exam Description -->
+                        <div class="mt-4">
+                            <x-input-label for="exam_desc" :value="__('Exam Description')" />
+                            <x-textarea-input id="exam_desc" class="block mt-1 w-full" name="exam_desc" :value="old('exam_desc')" required autocomplete="exam_desc"></x-textarea-input>
+                            <x-input-error :messages="$errors->get('exam_desc')" class="mt-2" />
+                        </div>
+
+                        <!-- Exam Duration -->
+                        <div class="mt-4">
+                            <x-input-label for="duration" :value="__('Exam duration')" />
+                            <x-text-input id="duration" class="block mt-1 w-full" type="text" name="duration" :value="old('duration')" placeholder="Hour : minutes" required autofocus autocomplete="duration" />
+                            <x-input-error :messages="$errors->get('duration')" class="mt-2" />
+                        </div>
+
+                        <!-- Exam Starting date -->
+                        <div class="mt-4">
+                            <x-input-label for="starting_date" :value="__('Exam starting date')" />
+                            <x-text-input id="starting_date" class="block mt-1 w-full" type="date" name="starting_date" :value="old('starting_date')" required autofocus autocomplete="starting_date" />
+                            <x-input-error :messages="$errors->get('starting_date')" class="mt-2" />
+                        </div>
+
+                        <!-- Exam Ending date -->
+                        <div class="mt-4">
+                            <x-input-label for="ending_date" :value="__('Exam ending date')" />
+                            <x-text-input id="ending_date" class="block mt-1 w-full" type="date" name="ending_date" :value="old('ending_date')" required autofocus autocomplete="ending_date" />
+                            <x-input-error :messages="$errors->get('ending_date')" class="mt-2" />
+                        </div>
+
+                        <!-- Exam Deficulity -->
+                        <div class="mt-4">
+                            <x-input-label for="difficulty_level" :value="__('Exam ending date')" />
+
+                            <select id="difficulty_level" name="difficulty_level" required>
+                                <option value="easy">Easy</option>
+                                <option value="normal">Normal</option>
+                                <option value="hard">Hard</option>
+                                <option value="insane">Insane</option>
+                            </select>
+
+                            <x-text-input  />
+                            <x-input-error :messages="$errors->get('difficulty_level')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
@@ -41,6 +96,7 @@
                                 </x-primary-button>
                         </div>
                     </form>
+
                 </div>
 
             </div>
@@ -56,6 +112,10 @@
                 <tr style="background-color: #000; color: #fff;" class="bg-gray-100">
                   <th class="px-4 py-2">Title</th>
                   <th class="px-4 py-2">Description</th>
+                  <th class="px-4 py-2">Duration</th>
+                  <th class="px-4 py-2">Starting date</th>
+                  <th class="px-4 py-2">Ending date</th>
+                  <th class="px-4 py-2">Difficulty level</th>
                   <th class="px-4 py-2">Actions</th>
                 </tr>
               </thead>
@@ -65,6 +125,10 @@
                     <tr class="bg-white">
                         <td class="border px-4 py-2">{{ $exam->title }}</td>
                         <td class="border px-4 py-2">{{ $exam->description }}</td>
+                        <td class="border px-4 py-2">{{ $exam->duration }}</td>
+                        <td class="border px-4 py-2">{{ $exam->starting_date }}</td>
+                        <td class="border px-4 py-2">{{ $exam->ending_date }}</td>
+                        <td class="border px-4 py-2">{{ $exam->difficulty_level }}</td>
                         <td class="border px-4 py-2 text-center">
 
                             <a href="{{ route('exam.edit', $exam->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
@@ -96,93 +160,6 @@
           </div>
         </div>
     </div>
-
-
-<script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
-
-
+    
 </x-app-layout>
-
-
-<script>
-
-    $(document).ready(function() {
-
-        $('#submitForm').submit(function(e) {
-            e.preventDefault(); // Prevent form submission
-
-            var form = $(this);
-            var url = form.attr('action');
-            var method = form.attr('method');
-            var data = form.serialize();
-
-            $.ajax({
-                url: url,
-                type: method,
-                data: data,
-                success: function(response) {
-                    // Show toast message
-                    showToast(response.message);
-                    form[0].reset(); // Reset the form
-                },
-                error: function(xhr) {
-                    // Show toast message with error
-                    showToast('An error occurred. Please try again.');
-                }
-            });
-        });
-
-        // Function to display toast message
-        function showToast(message) {
-            var toast = $('#toast');
-            toast.text(message);
-            toast.addClass('show-toast');
-            setTimeout(function() {
-                toast.removeClass('show-toast');
-            }, 3000);
-        }
-
-
-        $('.delete-button').click(function(e) {
-            e.preventDefault(); // Prevent default button behavior
-
-            var button = $(this);
-            var form = button.closest('form');
-            var url = form.attr('action');
-            var method = form.attr('method');
-
-            $.ajax({
-                url: url,
-                type: method,
-                data: form.serialize(),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                success: function(response) {
-                    // Show toast message
-                    showToast(response.message);
-                    // Remove the deleted row from the table
-                    button.closest('tr').remove();
-                },
-                error: function(xhr) {
-                    // Show toast message with error
-                    showToast('An error occurred. Please try again.');
-                }
-            });
-        });
-
-        // Function to display toast message
-        function showToast(message) {
-            var toast = $('#delete-toast');
-            toast.text(message);
-            toast.addClass('show-toast');
-            setTimeout(function() {
-                toast.removeClass('show-toast');
-            }, 3000);
-        }
-
-    });
-</script>
-
-
 

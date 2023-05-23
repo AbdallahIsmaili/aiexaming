@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -13,7 +15,8 @@ class ExamController extends Controller
     public function index()
     {
         $exams = Exam::all();
-        return view('admin.managements.index-exams', compact('exams'));
+        $subjects = Subject::all();
+        return view('admin.managements.index-exams', compact('exams', 'subjects'));
     }
 
     /**
@@ -29,7 +32,39 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the form data
+        $validatedData = $request->validate([
+            'exam_title' => 'required|string|max:255',
+            'subject_name' => 'required|integer',
+            'exam_desc' => 'required|string',
+            'duration' => 'required|date_format:H:i',
+            'starting_date' => 'required|date',
+            'ending_date' => 'required|date|after:starting_date',
+            'difficulty_level' => 'required|string|in:easy,normal,hard,insane',
+        ]);
+
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Create a new Exam instance and set its properties
+        $exam = new Exam();
+        $exam->title = $validatedData['exam_title'];
+        $exam->subject_id = $validatedData['subject_name'];
+        $exam->description = $validatedData['exam_desc'];
+        $exam->duration = $validatedData['duration'];
+        $exam->starting_date = $validatedData['starting_date'];
+        $exam->ending_date = $validatedData['ending_date'];
+        $exam->difficulty_level = $validatedData['difficulty_level'];
+
+        // Associate the exam with the authenticated user
+        $exam->user_id = $userId;
+
+        // Save the exam to the database
+        $exam->save();
+
+        return redirect()->route('exam.index')->with('success', 'Cool the new exam ' . $exam->title . ' created successfully!');
+        
+
     }
 
     /**

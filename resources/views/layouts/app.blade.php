@@ -67,6 +67,7 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
 
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
