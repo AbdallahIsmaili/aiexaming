@@ -13,7 +13,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        return view('admin.subjects.index-subjects', compact('subjects'));
+        return view('admin.managements.index-subjects', compact('subjects'));
     }
 
     /**
@@ -61,7 +61,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::findOrFail($id);
 
-        return view('admin.subjects.edit-subject', compact('subject'));
+        return view('admin.managements.edit-subject', compact('subject'));
     }
 
     /**

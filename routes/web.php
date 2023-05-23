@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/subject', SubjectController::class)->names([
         'index' => 'subject.index'
+    ]);
+
+    Route::resource('/exam', ExamController::class)->names([
+        'index' => 'exam.index'
     ]);
 
 });
