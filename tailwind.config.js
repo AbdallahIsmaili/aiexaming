@@ -10,6 +10,30 @@ export default {
     ],
 
     theme: {
+        colors: {
+            transparent: 'transparent',
+            current: 'currentColor',
+            white: '#ffffff',
+            purple: '#3f3cbb',
+            midnight: '#121063',
+            metal: '#565584',
+            tahiti: '#3ab7bf',
+            silver: '#ecebff',
+            'bubble-gum': '#ff77e9',
+            bermuda: '#78dcca',
+            lavender: '#c6b2ff',
+            moss: '#9bcf8a',
+            rose: '#ff9baf',
+            sunshine: '#ffdb6d',
+            navy: '#001f3f',
+            lime: '#00ff00',
+            red: '#ff0000',
+            orange: '#ff6600',
+            blue: '#0000ff',
+            green: '#008000',
+            pink: '#ff69b4',
+            // Add more colors here
+        },
         screens: {
             'sm': {'max': '639px'},
 

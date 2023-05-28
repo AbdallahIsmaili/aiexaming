@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +40,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('/exam', ExamController::class)->names([
         'index' => 'exam.index'
     ]);
+
+    Route::resource('/question', QuestionController::class)->names([
+        'index' => 'question.index'
+    ]);
+
+    Route::resource('/option', OptionController::class)->names([
+        'index' => 'option.index'
+    ]);
+
+    Route::get('/exam/{id}/question/create', [ExamController::class, 'createQuestion'])->name('exam.question.create');
+
 
 });
 

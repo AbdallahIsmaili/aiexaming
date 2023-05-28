@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\Question;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,7 @@ class ExamController extends Controller
         $exam->save();
 
         return redirect()->route('exam.index')->with('success', 'Cool the new exam ' . $exam->title . ' created successfully!');
-        
+
 
     }
 
@@ -78,24 +79,50 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exam $exam)
+    public function edit($id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+        $subjects = Subject::all();
+
+        return view('admin.managements.edit-exam', compact('exam', 'subjects'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exam $exam)
+    public function update(Request $request, $id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+        $exam->title = $request->input('exam_title');
+        $exam->subject_id = $request->input('subject_name');
+        $exam->description = $request->input('exam_desc');
+        $exam->duration = $request->input('duration');
+        $exam->starting_date = $request->input('starting_date');
+        $exam->ending_date = $request->input('ending_date');
+        $exam->difficulty_level = $request->input('difficulty_level');
+        $exam->save();
+
+        return redirect()->route('exam.index')->with('success', 'Updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exam $exam)
+    public function destroy($id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+        $exam->delete();
+
+        return redirect()->route('exam.index')->with('success', 'deleted successfully!');
+    }
+
+    /**
+     * Create a question to that exam.
+     */
+    public function createQuestion($id)
+    {
+        $exam = Exam::findOrFail($id);
+        $questions = Question::all();
+        return view('admin.managements.create-question', compact('exam', 'questions'));
     }
 }
