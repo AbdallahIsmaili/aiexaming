@@ -51,6 +51,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/exam/{id}/question/create', [ExamController::class, 'createQuestion'])->name('exam.question.create');
 
+    Route::get('/exam/{id}/testing', [ExamController::class, 'testExam'])->name('exam.test');
+
+    Route::get('/exam/{id}/testing/question/{id}', [ExamController::class, 'testQuestion'])->name('exam.question.test');
+
+    Route::get('/question/{id}/option/create', [QuestionController::class, 'createOption'])->name('question.option.create');
+
 
 });
 

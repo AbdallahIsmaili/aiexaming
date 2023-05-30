@@ -125,4 +125,21 @@ class ExamController extends Controller
         $questions = Question::all();
         return view('admin.managements.create-question', compact('exam', 'questions'));
     }
+
+
+    public function testExam($id)
+    {
+        $exam = Exam::findOrFail($id);
+        $questions = Question::all();
+        return view('admin.managements.test-exam', compact('exam', 'questions'));
+    }
+
+
+    // continue from here, get the questions related to that exam
+    public function testQuestion($id)
+    {
+        $exam = Exam::findOrFail($id);
+        $questions = Question::all();
+        return view('admin.managements.test-exam', compact('exam', 'questions'));
+    }
 }

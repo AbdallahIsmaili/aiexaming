@@ -121,7 +121,7 @@
                 $user = Auth::user();
             @endphp
 
-                
+
                 @forelse ($questions as $question)
                     @if ($question->exam_id == $exam->id)
                         <tr class="bg-white">
@@ -144,6 +144,14 @@
 
                                 <a href="{{ route('question.edit', $question->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                     U
+                                </a>
+
+                                <a href="{{ route('question.option.create', $question->id) }}" class="inline-flex items-center px-4 py-2 bg-yellow-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-700 focus:bg-yellow-700 active:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    O
+                                </a>
+
+                                <a href="{{ route('question.show', $question->id) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    S
                                 </a>
 
                                 <form class="delete-form inline" action="{{ route('question.destroy', $question->id) }}" method="POST">

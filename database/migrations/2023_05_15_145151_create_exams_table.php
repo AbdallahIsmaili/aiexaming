@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('subject_id')->constrained('subjects');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('duration');
+            $table->string('duration');
             $table->date('starting_date');
             $table->date('ending_date');
             $table->string('difficulty_level');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
+use App\Models\Option;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +38,7 @@ class QuestionController extends Controller
             'exam_title' => 'integer',
             'question_text' => 'required|string|max:255',
             'difficulty_level' => 'required|string|in:easy,normal,hard,insane',
-            'attachment_url' => 'required|file|mimes:jpeg,jpg,png,gif,mp4,mov,avi,wav,mp3|max:2048',
+            'attachment_url' => 'file|mimes:jpeg,jpg,png,gif,mp4,mov,avi,wav,mp3|max:2048',
         ]);
 
         // Get the authenticated user's ID
@@ -71,9 +73,11 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Question $question)
+    public function show( $id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $options = Option::where('question_id', $question->id)->get();
+        return view('admin.managements.question', compact('question','options'));
     }
 
     /**
@@ -123,5 +127,15 @@ class QuestionController extends Controller
         $question->delete();
 
         return redirect()->route('exam.question.create', $question->exam_id)->with('success', 'The question "' . $question->question_text . '" was deleted successfully!');
+    }
+
+    /**
+     * Create an option to that exam.
+     */
+    public function createOption($id)
+    {
+        $question = Question::findOrFail($id);
+        $options = Option::where('question_id', $question->id)->get();
+        return view('admin.managements.create-option', compact('question', 'options'));
     }
 }

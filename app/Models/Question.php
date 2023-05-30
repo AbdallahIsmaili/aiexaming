@@ -17,4 +17,9 @@ class Question extends Model
         'difficulty_level',
         'attachment_url',
     ];
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class, 'exam_id');
+    }
 }
