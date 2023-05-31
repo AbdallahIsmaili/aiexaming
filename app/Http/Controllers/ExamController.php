@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Subject;
+use App\Models\UserExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,9 +72,13 @@ class ExamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exam $exam)
+    public function show($id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+        $questions = Question::all();
+        $options = Question::all();
+
+        return view('exams.exam', compact('exam', 'questions', 'options'))->with('started', 'You have started the exam!');
     }
 
     /**
@@ -134,12 +139,23 @@ class ExamController extends Controller
         return view('admin.managements.test-exam', compact('exam', 'questions'));
     }
 
-
-    // continue from here, get the questions related to that exam
-    public function testQuestion($id)
+    public function startExam($id)
     {
         $exam = Exam::findOrFail($id);
-        $questions = Question::all();
-        return view('admin.managements.test-exam', compact('exam', 'questions'));
+        $randomQuestion = $exam->questions()->inRandomOrder()->first(); // Get the first random question for the exam
+
+        $userExam = new UserExam();
+        $userExam->user_id = auth()->id();
+        $userExam->exam_id = $exam->id;
+        $userExam->started_at = now();
+        $userExam->save();
+
+        $user_exam_id = $userExam->id;
+
+        return redirect()->route('question.show', [$exam->id, $randomQuestion->id])->with('user_exam_id', $user_exam_id)->with('started', 'You have started the exam!');
+
     }
+
+
+
 }

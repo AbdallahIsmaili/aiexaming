@@ -73,12 +73,16 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+
+    public function show($exam_id, $question_id)
     {
-        $question = Question::findOrFail($id);
+        $exam = Exam::findOrFail($exam_id);
+        $question = Question::findOrFail($question_id);
+
         $options = Option::where('question_id', $question->id)->get();
-        return view('admin.managements.question', compact('question','options'));
+        return view('questions.question', compact('question','options'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

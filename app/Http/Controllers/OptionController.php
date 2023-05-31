@@ -67,7 +67,7 @@ class OptionController extends Controller
 
         // Redirect or perform any other actions after saving the options
 
-        return redirect()->route('question.show', compact('question'));
+        return redirect()->back();
     }
 
 

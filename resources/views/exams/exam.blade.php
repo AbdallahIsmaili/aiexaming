@@ -9,8 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="" method="POST">
-                        @csrf
+
                         <h3 class="font-semibold text-4xl text-center mb-10">Let's take that exam: {{ $exam->title }}</h3>
 
 
@@ -24,7 +23,10 @@
 
                         <div class="text-center mt-4">
 
-                            <form action="{{ route('exam.start', $exam->id) }}" method="post">
+                            <form action="{{ route('startExam', $exam->id) }}" method="POST">
+
+                                @csrf
+                                @method('POST')
 
                                 @if (date('Y-m-d') < $exam->starting_date)
                                     <button type="submit" class="bg-yellow-300 hover:bg-yellow-500 text-white font-bold py-2 my-10 px-16 rounded" disabled>
@@ -42,7 +44,6 @@
                             </form>
 
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
