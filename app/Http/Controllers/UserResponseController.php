@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
 use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserResponse;
@@ -73,9 +74,12 @@ class UserResponseController extends Controller
         if ($nextQuestion) {
             // Redirect to the next non-passed question
             return redirect()->route('question.show', [$exam_id, $nextQuestion->id])->with('user_exam_id', $user_exam_id);
+
         } else {
             // Redirect to the result page as all questions have been passed
-            return redirect()->route('result', $exam_id);
+
+            return redirect()->route('result.show', $user_exam_id );
+
         }
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserResponseController;
+use App\Http\Controllers\UserExamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,9 +75,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/user-response', UserResponseController::class)->names([ 'index' => 'user-response.index']);
 
-    Route::get('/result/{id}/exam', function(){
-        return view('exams.result');
-    })->name('result');
+    Route::resource('/result', UserExamController::class)->names([
+        'index' => 'result.index',
+        'show' => 'result.show'
+    ]);
 
 });
 

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
+use App\Models\Option;
 use App\Models\UserExam;
+use App\Models\UserResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserExamController extends Controller
 {
@@ -34,10 +38,34 @@ class UserExamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserExam $userExam)
+    public function show($user_exam_id)
     {
-        //
+        $user = Auth::user();
+        $userExam = UserExam::findOrFail($user_exam_id);
+        $exam = Exam::findOrFail($userExam->exam_id);
+        $userID = $userExam->user_id;
+
+        $userResponses = UserResponse::where('user_exam_id', $user_exam_id)->get();
+
+        $correctAnswers = 0;
+        foreach ($userResponses as $response) {
+            if ($response->selected_option_id) {
+                $option = Option::findOrFail($response->selected_option_id);
+                if ($option->is_correct) {
+                    $correctAnswers++;
+                }
+            }
+        }
+
+        $score = ($correctAnswers / count($userResponses)) * 100;
+
+        $userExam->score = $score;
+        $userExam->submitted_at = now();
+        $userExam->save();
+
+        return view('exams.result', compact('exam', 'score', 'userID'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
