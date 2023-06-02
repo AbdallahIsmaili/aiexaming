@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/dashboard/users/{user_id}/unban', [HomeController::class, 'unbanUser'])->name('user.unban');
 
+    Route::get('/dashboard/users-exams', [UserExamController::class, 'usersExams'])->name('users.note');
+
     Route::resource('/subject', SubjectController::class)->names([
         'index' => 'subject.index'
     ]);

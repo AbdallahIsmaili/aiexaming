@@ -72,11 +72,11 @@
 
                         <x-slot name="content">
 
-                            <x-dropdown-link :href="route('exam.index')">
+                            <x-dropdown-link :href="route('users.note')">
                                 {{ __('Admins') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('exam.index')">
+                            <x-dropdown-link :href="route('dashboard.teachers')">
                                 {{ __('Teachers') }}
                             </x-dropdown-link>
 

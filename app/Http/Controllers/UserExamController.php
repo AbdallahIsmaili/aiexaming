@@ -67,6 +67,21 @@ class UserExamController extends Controller
     }
 
 
+    public function usersExams()
+    {
+        // $usersExams = UserExam::whereNotNull('score')
+        //     ->whereNotNull('submitted_at')
+        //     ->paginate(10);
+
+        $usersExams = UserExam::whereNotNull('score')
+            ->whereNotNull('submitted_at')
+            ->paginate(10);
+
+        return view('admin.users.notes', compact('usersExams'));
+    }
+
+
+
     /**
      * Show the form for editing the specified resource.
      */
