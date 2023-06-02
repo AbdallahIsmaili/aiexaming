@@ -26,11 +26,11 @@
             </div>
 
 
-
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
 
-                @if(Request::is('dashboard') or Request::is('subject') or Request::is('exam') )
+                @if((Request::is('dashboard') or Request::is('subject') or Request::is('exam')) and Auth::user()->rank === 'admin')
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -54,10 +54,6 @@
                                 {{ __('Exams Managment') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
-                                {{ __('Questions Managment') }}
-                            </x-dropdown-link>
-
                         </x-slot>
                     </x-dropdown>
 
@@ -76,25 +72,31 @@
 
                         <x-slot name="content">
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('exam.index')">
                                 {{ __('Admins') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('exam.index')">
                                 {{ __('Teachers') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('dashboard.users')">
                                 {{ __('Students') }}
                             </x-dropdown-link>
 
                         </x-slot>
                     </x-dropdown>
 
+                @endif
+
+
+
+                @if((Request::is('dashboard') or Request::is('subject') or Request::is('exam')) and Auth::user()->rank === 'teacher')
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>Announcements</div>
+                                <div>Managments</div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -106,53 +108,12 @@
 
                         <x-slot name="content">
 
-                            <x-dropdown-link>
-                                {{ __('MailGun') }}
+                            <x-dropdown-link :href="route('subject.index')">
+                                {{ __('Subject Managment') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
-                                {{ __('Notifications') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link>
-                                {{ __('Reports') }}
-                            </x-dropdown-link>
-
-                        </x-slot>
-                    </x-dropdown>
-
-
-                @else
-
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>Subjects</div>
-
-                                <div class="ml-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-
-                            <x-dropdown-link>
-                                {{ __('Mathimatics') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link>
-                                {{ __('Informatics') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link>
-                                {{ __('Motion Graphics') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link>
-                                {{ __('English') }}
+                            <x-dropdown-link :href="route('exam.index')">
+                                {{ __('Exams Managment') }}
                             </x-dropdown-link>
 
                         </x-slot>

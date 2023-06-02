@@ -33,6 +33,18 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         return view('admin.dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::get('/dashboard/users', [HomeController::class, 'getUsers'])->name('dashboard.users');
+
+    Route::get('/dashboard/teachers', [HomeController::class, 'getTeachers'])->name('dashboard.teachers');
+
+    Route::get('/dashboard/users/{user_id}/rise', [HomeController::class, 'riseUser'])->name('user.rise');
+
+    Route::get('/dashboard/users/{user_id}/down', [HomeController::class, 'downgradeTeacher'])->name('user.down');
+
+    Route::get('/dashboard/users/{user_id}/ban', [HomeController::class, 'banUser'])->name('user.ban');
+
+    Route::get('/dashboard/users/{user_id}/unban', [HomeController::class, 'unbanUser'])->name('user.unban');
+
     Route::resource('/subject', SubjectController::class)->names([
         'index' => 'subject.index'
     ]);
@@ -52,8 +64,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/exam/{id}/question/create', [ExamController::class, 'createQuestion'])->name('exam.question.create');
 
     Route::get('/exam/{id}/testing', [ExamController::class, 'testExam'])->name('exam.test');
-
-    // Route::get('/exam/{exam_id}/testing/question/{question_id}', [ExamController::class, 'testQuestion'])->name('exam.question.test');
 
     Route::get('/question/{id}/option/create', [QuestionController::class, 'createOption'])->name('question.option.create');
 
